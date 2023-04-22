@@ -12,7 +12,32 @@ services:
     ports:
       - "5432:5432"
     restart: always
+    networks:
+      - ayur_auth
+
+  auth: # auth service container
+    container_name: 'auth'
+    build:
+      dockerfile: Dockerfile
+    env_file:
+      - "./.env"
+    restart: always
+    networks:
+      - ayur
+      - ayur_auth
 
 
 volumes:
   db:
+
+networks:
+  ayur:  # network to connect all ayur services
+    driver: bridge
+  ayur_auth:
+    driver: bridge
+  ayur_user:
+    driver: bridge
+  ayur_hospital_staff:
+    driver: bridge
+  ayur_checkups:
+    driver: bridge
