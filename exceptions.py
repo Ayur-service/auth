@@ -23,7 +23,7 @@ def HTTP_409(msg: str = "Data already exist") -> HTTPException:
     )
 
 
-def HTTP_422(msg: str = "Unprocessable Enttiy") -> HTTPException:
+def HTTP_422(msg: str = "Unprocessable Entity") -> HTTPException:
     return HTTPException(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
         detail=msg
