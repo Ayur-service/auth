@@ -1,0 +1,8 @@
+.gitignore
+.dockerignore
+Dockerfile
+*.yaml
+test.py
+.idea
+auth
+auth.pub
