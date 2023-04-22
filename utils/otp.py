@@ -23,8 +23,9 @@ async def resend_otp(otp: OTP):
 def verify_otp(otp: OTP):
     # return _send_otp("https://d7-verify.p.rapidapi.com/verify/v1/otp/verify-otp",
     #                  {"otp_id": otp.otp_id, "otp_code": otp.otp})
-    if otp.otp_id == 6969 and otp.otp == 6969 :
+    if otp.otp_id == "6969" and otp.otp == "6969":
         return {"status": "APPROVED"}
+    return {"status": "OPEN"}
 
 
 async def _send_otp(url: str, payload: dict):
