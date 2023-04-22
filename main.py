@@ -2,9 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from config import OriginSettings
 from router import auth_router
-from utils.database import DataBase
-from utils.database import DataBase
 from functools import lru_cache
+from utils.database import DataBase
 
 app = FastAPI(
     title='Auth Service',
@@ -42,3 +41,15 @@ app.add_middleware(
 
 
 app.include_router(auth_router)
+
+
+@app.on_event("startup")
+def init_db():
+    DataBase()
+
+
+@app.on_event("shutdown")
+def close_db_conn():
+    print("working")
+    DataBase().session.commit()  # commit everything
+    DataBase().engine.dispose()  # close connection
