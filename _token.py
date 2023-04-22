@@ -1,5 +1,5 @@
 from functools import lru_cache
-from config import JWT_Settings
+from config import JWT_Settings as _jwt
 from jose import JWTError
 import jwt
 from typing import Dict, Optional
@@ -8,14 +8,6 @@ from fastapi import Request
 import exceptions as exceptions
 from model import UserToken, StaffToken
 from jwt.exceptions import ExpiredSignatureError
-
-
-@lru_cache()
-def cached_keys():
-    return JWT_Settings()
-
-
-_jwt = cached_keys()  # Load the keys from the .env
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = timedelta(minutes=_jwt.validity)):
