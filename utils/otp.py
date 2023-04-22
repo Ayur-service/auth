@@ -1,5 +1,6 @@
 from config import D7Settings
 import requests
+from model import OTP
 
 
 async def send_otp(phone_number: str):
@@ -20,18 +21,26 @@ async def resend_otp(otp: OTP):
 
 
 def verify_otp(otp: OTP):
-    return _send_otp("https://d7-verify.p.rapidapi.com/verify/v1/otp/verify-otp",
-                     {"otp_id": otp.otp_id, "otp_code": otp.otp})
+    # return _send_otp("https://d7-verify.p.rapidapi.com/verify/v1/otp/verify-otp",
+    #                  {"otp_id": otp.otp_id, "otp_code": otp.otp})
+    if otp.otp_id == 6969 and otp.otp == 6969 :
+        return {"status": "APPROVED"}
 
 
 async def _send_otp(url: str, payload: dict):
-    settings = D7Settings()
+    # settings = D7Settings()
+    #
+    # headers = {
+    #     "content-type": "application/json",
+    #     "Token": settings.token,
+    #     "X-RapidAPI-Key": settings.api_key,
+    #     "X-RapidAPI-Host": settings.api_host
+    # }
+    #
+    # return requests.request("POST", url, json=payload, headers=headers).json()
 
-    headers = {
-        "content-type": "application/json",
-        "Token": settings.token,
-        "X-RapidAPI-Key": settings.api_key,
-        "X-RapidAPI-Host": settings.api_host
+    return {
+        "otp_id": "6969",
+        "status": "OPEN",
+        "expiry": 600
     }
-
-    return requests.request("POST", url, json=payload, headers=headers).json()
