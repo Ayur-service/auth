@@ -1,6 +1,10 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from config import OriginSettings
 from router import auth_router
+from utils.database import DataBase
+from utils.database import DataBase
+from functools import lru_cache
 
 app = FastAPI(
     title='Auth Service',
