@@ -2,7 +2,7 @@ from functools import lru_cache
 from config import JWT_Settings as _jwt
 from jose import JWTError
 import jwt
-from typing import Dict, Optional
+from typing import Dict
 from datetime import timedelta, datetime
 from fastapi import Request
 import exceptions as exceptions
@@ -10,7 +10,7 @@ from model import UserToken, StaffToken
 from jwt.exceptions import ExpiredSignatureError
 
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = timedelta(minutes=_jwt.validity)):
+def create_access_token(data: dict, expires_delta: timedelta = timedelta(minutes=_jwt.validity)):
     to_encode = data.copy()
     expire = datetime.utcnow() + expires_delta
     to_encode.update({'expire': expire.timestamp()})

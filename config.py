@@ -21,7 +21,7 @@ class JWT_Settings:
 
     secret_key: str = serialization.load_ssh_private_key(open("./_auth", "r").read().encode(), password=b"Kanak@don4")
     public_key: str = serialization.load_ssh_public_key(open("./_auth.pub", "r").read().encode())
-    algorithm: "RS256"
+    algorithm: str = "RS256"
     validity: int = 21600
     aud = ["hospital", "user"]
 
