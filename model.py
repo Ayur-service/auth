@@ -7,10 +7,9 @@ class OTP(BaseModel):
     otp: str = None
 
 
-class User(BaseModel):
-    ayur_id: str
+class BaseUser(BaseModel):
     phone_number: str
-    finger_print_hash: str
+    fingerprint_hash: str
 
     @validator("phone_number")
     def validate_phone_number(cls, phone_number: str):
@@ -22,30 +21,37 @@ class User(BaseModel):
         return phone_number
 
 
-class UserLogin(User):
+class User(BaseUser):
+    ayur_id: str
+
+
+class UserLogin(BaseModel):
+    ayur_id: Optional[str]
+    phone_number: Optional[str]
+    fingerprint_hash: Optional[str]
     otp: OTP
 
 
-class UserSignUp(UserLogin):
-    ...
+class UserSignUp(BaseUser):
+    otp: OTP
 
 
 class BaseStaff(BaseModel):
-    hospital_id: str
     username: str
+    password: str
 
 
 class Staff(BaseStaff):
-    password: str  # hash password
+    hospital_id: str
     is_admin: bool
     access: List[str]
 
 
 class StaffLogin(BaseStaff):
-    password: str
+    hospital_id: str
 
 
-class StaffSignUp(Staff):
+class StaffSignUp(BaseStaff):
     password2: str
     is_admin: bool = False
     access: List[str] = ["read"]  # write, read
