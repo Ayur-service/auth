@@ -18,7 +18,7 @@ from _token import validate_token, create_access_token
 from sqlalchemy import or_
 from logging import info
 
-auth_router = APIRouter()
+auth_router = APIRouter(prefix="auth")
 
 
 def get_user(user: User) -> User:
@@ -116,7 +116,7 @@ def register_hospital_staff(staff: StaffSignUp, token_data: StaffToken = Depends
     if session.query(HospitalStaffModel).filter(HospitalStaffModel.username == staff.username).first():
         raise exceptions.HTTP_409("username already exist!")
 
-    session.add(HospitalStaffModel(hospital_id=token_data.hospital_id, username=staff.username, password= hash_password(staff.password),
+    session.add(HospitalStaffModel(hospital_id=token_data.hospital_id, username=staff.username, password=hash_password(staff.password),
                                    is_admin=staff.is_admin, access=staff.access))
     session.commit()
 
