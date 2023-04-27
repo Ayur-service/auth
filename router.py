@@ -18,7 +18,7 @@ from _token import validate_token, create_access_token
 from sqlalchemy import or_
 from logging import info
 
-auth_router = APIRouter(prefix="auth")
+auth_router = APIRouter(prefix="/auth")
 
 
 def get_user(user: User) -> User:
@@ -47,7 +47,7 @@ def _get_staff(staff_username: str) -> Staff:
 
 
 def login_staff(staff: StaffLogin) -> Dict[str, str]:
-    staff = _get_staff(staff.username)
+    staff = _get_staff(staff.username.lower())
     if not verify_password(staff.password, hash_password(staff.password)):
         raise exceptions.HTTP_401("Invalid Username or Password")
 
@@ -116,7 +116,8 @@ def register_hospital_staff(staff: StaffSignUp, token_data: StaffToken = Depends
     if session.query(HospitalStaffModel).filter(HospitalStaffModel.username == staff.username).first():
         raise exceptions.HTTP_409("username already exist!")
 
-    session.add(HospitalStaffModel(hospital_id=token_data.hospital_id, username=staff.username, password=hash_password(staff.password),
+    session.add(HospitalStaffModel(hospital_id=token_data.hospital_id, username=staff.username.lower(),
+                                   password=hash_password(staff.password),
                                    is_admin=staff.is_admin, access=staff.access))
     session.commit()
 
