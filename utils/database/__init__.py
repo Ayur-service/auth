@@ -14,11 +14,6 @@ db = DBSettings()
 class _Base(DeclarativeBase):
 
     def dict(self):
-        # d = deepcopy(self.__dict__)
-        # for key in self.__dict__:
-        #     if key.startswith("__") or key.startswith("_"):
-        #         d.pop(key)
-        # return d
         return self.__dict__
 
 
@@ -33,7 +28,7 @@ class DBMeta(type):
 
 class DataBase(metaclass=DBMeta):
 
-    db_name: str = "ayur_auth"
+    db_name: str = db.db_name
 
     def __init__(self):
         self.engine = create_engine(
@@ -63,7 +58,7 @@ class User(_Base):
 
 class HospitalStaff(_Base):
     __tablename__ = "hospital_staff"
-    hospital_id = Column("hospital_id", String(15), nullable=False)
+    hospital_id = Column("hospital_id", String(15), primary_key=True)
     username = Column("username", String(15), primary_key=True)
     password = Column("password", String(300), nullable=False)
     is_admin = Column("is_admin", BOOLEAN, default=False)
