@@ -56,3 +56,7 @@ def HTTP_503(msg: str = "Service Unavailable") -> HTTPException:
         status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
         detail=msg
     )
+
+
+def INVALID_ARGS(msg: str = "Insufficient Arguments") -> Exception:
+    return Exception(msg)
