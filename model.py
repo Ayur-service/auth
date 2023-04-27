@@ -47,6 +47,11 @@ class Staff(BaseStaff):
     access: List[str]
 
 
+class AdminStaff(Staff):
+    is_admin: bool = True
+    access: List[str] = ["Read", " Write"]
+
+
 class StaffLogin(BaseStaff):
     hospital_id: str
 
