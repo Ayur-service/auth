@@ -17,7 +17,8 @@ app = FastAPI(
         "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
     docs_url="/docs",
-    redoc_url="/redocs"
+    redoc_url="/redocs",
+    root_path="/auth"
 )
 
 

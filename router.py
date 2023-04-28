@@ -18,7 +18,7 @@ from _token import validate_token, create_access_token
 from sqlalchemy import or_
 from logging import info
 
-auth_router = APIRouter(prefix="/auth")
+auth_router = APIRouter()
 
 
 def get_user(user: User) -> User:
