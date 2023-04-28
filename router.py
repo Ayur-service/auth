@@ -151,15 +151,3 @@ async def re_send_otp(otp: OTP):
 def get_public_keys():
     ...
 
-
-@auth_router.post("/staff_cmd", status_code=status.HTTP_201_CREATED)
-def create_hospital_staff(staff: Staff):
-
-    """
-    Helper function! will be removed in next ver.
-    Create Admin Hospital_Staff...
-    """
-    hash_pwd = hash_password(staff.password)
-    DataBase().session.add(HospitalStaffModel(hospital_id=staff.hospital_id, password=hash_pwd, username=staff.username,
-                                              is_admin=staff.is_admin, access=staff.access))
-    DataBase().session.commit()
