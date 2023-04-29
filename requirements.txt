@@ -16,7 +16,6 @@ passlib==1.7.4
 pyasn1==0.4.8
 pycparser==2.21
 PyJWT==2.6.0
-pymongo==4.3.3
 python-dotenv==1.0.0
 python-jose==3.3.0
 pytz==2022.7.1
