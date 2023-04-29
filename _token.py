@@ -38,9 +38,9 @@ async def validate_token(request: Request) -> UserToken | StaffToken:
         logging.error(e)
         raise exceptions.HTTP_401("Expired Token")
 
-    except JWTError as e:
+    except JWTError or jwt.exceptions.InvalidAudienceError as e:
         logging.error(e)
-        raise exceptions.HTTP_401(e)
+        raise exceptions.HTTP_401("Invalid Token")
 
     except KeyError:  # when header is missing
         raise exceptions.HTTP_400("Required Headers are missing")
