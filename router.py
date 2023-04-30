@@ -39,15 +39,16 @@ def get_user(user: User) -> User:
     return User(**_user.dict())
 
 
-def _get_staff(staff_username: str) -> Staff:
-    staff = DataBase().session.query(HospitalStaffModel).filter(HospitalStaffModel.username == staff_username).first()
+def _get_staff(hospital_id: str, staff_username: str) -> Staff:
+    staff = DataBase().session.query(HospitalStaffModel).filter(HospitalStaffModel.username == staff_username,
+                                                                HospitalStaffModel.hospital_id == hospital_id).first()
     if not staff:
-        raise exceptions.HTTP_404("username not found")
+        raise exceptions.HTTP_404(f"username not found for {hospital_id}")
     return Staff(**staff.dict())
 
 
 def login_staff(staff: StaffLogin) -> Dict[str, str]:
-    staff = _get_staff(staff.username.lower())
+    staff = _get_staff(staff.hospital_id.lower(), staff.username.lower())
     if not verify_password(staff.password, hash_password(staff.password)):
         raise exceptions.HTTP_401("Invalid Username or Password")
 
